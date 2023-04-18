@@ -7,6 +7,13 @@ public class Player : MonoBehaviour
     public delegate void Movement(bool _value);
     public event Movement Event_OnPlayerMove;
 
+    public delegate void CounterSelectionVisual(ClearCounter counter);
+    public event CounterSelectionVisual OnSelectedCounterVisualChanged;
+
+
+    public static Player Instance { get; private set; }
+
+
     GameInput gameInput;
 
     [SerializeField] 
@@ -17,11 +24,26 @@ public class Player : MonoBehaviour
 
     [SerializeField] 
     LayerMask counterLayerMask;
+    private ClearCounter selectedCounter;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
         gameInput = FindObjectOfType<GameInput>();
+
+        gameInput.OnInteraction += GameInput_OnInteraction;
+    }
+
+    private void GameInput_OnInteraction()
+    {
+        if(selectedCounter != null)
+        {
+            selectedCounter.Interact();
+        }
     }
 
     private void Update()
@@ -42,11 +64,26 @@ public class Player : MonoBehaviour
         byte interactDistance = 2;
         if(Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit hit, interactDistance, counterLayerMask))
         {
-            if(hit.transform.parent.TryGetComponent(out ClearCounter clearCounter))
+            if (hit.transform.parent.TryGetComponent(out ClearCounter clearCounter))
             {
-                clearCounter.Interact();
+                if (selectedCounter != clearCounter)
+                {
+                    selectedCounter = clearCounter;
+                    OnSelectedCounterVisualChanged?.Invoke(selectedCounter);
+
+                }
+            }
+            else
+            {
+                selectedCounter = null;
+                OnSelectedCounterVisualChanged?.Invoke(selectedCounter);
             }
 
+        }
+        else
+        {
+            selectedCounter = null;
+            OnSelectedCounterVisualChanged?.Invoke(selectedCounter);
         }
 
     }

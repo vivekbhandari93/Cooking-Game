@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7459570524715895966}
   - component: {fileID: 212461412531154945}
+  - component: {fileID: 8227570507310332719}
   m_Layer: 6
   m_Name: ClearCounter_Visual
   m_TagString: Untagged
@@ -142,3 +143,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7868f7a6a788fe4c829ef02d17ee925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8227570507310332719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7459570524715895967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ccac461fa9f56e4884cf0e77a9a0b9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 592705374249410987, guid: e3d496c6436b0cf4a8eef3d8865e8639, type: 3}
+  - {fileID: 2100000, guid: 1a0afd856a35421469b28b916116fd9c, type: 2}
