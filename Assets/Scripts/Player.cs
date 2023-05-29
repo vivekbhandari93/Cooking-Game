@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IKitchenObjectParent
 {
     public delegate void Movement(bool _value);
     public event Movement Event_OnPlayerMove;
@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
 
 
     public static Player Instance { get; private set; }
+
+
+    const string Object_Holder = "ObjectHolder";
 
 
     GameInput gameInput;
@@ -26,6 +29,10 @@ public class Player : MonoBehaviour
     LayerMask counterLayerMask;
     private ClearCounter selectedCounter;
 
+    Transform kitchenObjectHolder;
+
+    public KitchenObject CurrentKitchenObject { get; set; }
+
     private void Awake()
     {
         Instance = this;
@@ -34,7 +41,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         gameInput = FindObjectOfType<GameInput>();
-
+        kitchenObjectHolder = transform.Find(Object_Holder);
         gameInput.OnInteraction += GameInput_OnInteraction;
     }
 
@@ -42,7 +49,7 @@ public class Player : MonoBehaviour
     {
         if(selectedCounter != null)
         {
-            selectedCounter.Interact();
+            selectedCounter.Interact(this);
         }
     }
 
@@ -111,5 +118,10 @@ public class Player : MonoBehaviour
 
         // rotation control
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
+    }
+
+    public Transform GetKitchenObjectFollowTransfrom()
+    {
+        return kitchenObjectHolder;
     }
 }

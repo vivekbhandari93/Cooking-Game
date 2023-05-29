@@ -8,9 +8,25 @@ public class KitchenObject : MonoBehaviour
     KitchenObjectSO kitchenObjectSO;
     public KitchenObjectSO KitchenObjectSO { get; }
 
-    
-    ClearCounter clearCounter;
-    public ClearCounter ClearCounter { get; set; }
+
+    IKitchenObjectParent kitchenObjectParent;
+    public IKitchenObjectParent KitchenObjectParent
+    {
+        get
+        {
+            return kitchenObjectParent;
+        }
+
+        set
+        {
+            if (kitchenObjectParent != null) kitchenObjectParent.CurrentKitchenObject = null;
+            kitchenObjectParent = value;
+            transform.parent = kitchenObjectParent.GetKitchenObjectFollowTransfrom();
+            transform.localPosition = Vector3.zero;
+            kitchenObjectParent.CurrentKitchenObject = this; 
+
+        }
+    }
 
 
 }
