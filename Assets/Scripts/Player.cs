@@ -7,14 +7,15 @@ public class Player : MonoBehaviour, IKitchenObjectParent
     public delegate void Movement(bool _value);
     public event Movement Event_OnPlayerMove;
 
-    public delegate void CounterSelectionVisual(ClearCounter counter);
+    public delegate void CounterSelectionVisual(BaseCounter counter);
     public event CounterSelectionVisual OnSelectedCounterVisualChanged;
+
 
 
     public static Player Instance { get; private set; }
 
 
-    const string Object_Holder = "ObjectHolder";
+    const string Object_Holder = "Object Holder";
 
 
     GameInput gameInput;
@@ -27,7 +28,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
 
     [SerializeField] 
     LayerMask counterLayerMask;
-    private ClearCounter selectedCounter;
+    private BaseCounter selectedCounter;
 
     Transform kitchenObjectHolder;
 
@@ -71,7 +72,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         byte interactDistance = 2;
         if(Physics.Raycast(transform.position, lastInteractDirection, out RaycastHit hit, interactDistance, counterLayerMask))
         {
-            if (hit.transform.parent.TryGetComponent(out ClearCounter clearCounter))
+            if (hit.transform.TryGetComponent(out BaseCounter clearCounter))
             {
                 if (selectedCounter != clearCounter)
                 {
@@ -119,6 +120,7 @@ public class Player : MonoBehaviour, IKitchenObjectParent
         // rotation control
         transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * rotationSpeed);
     }
+
 
     public Transform GetKitchenObjectFollowTransfrom()
     {
