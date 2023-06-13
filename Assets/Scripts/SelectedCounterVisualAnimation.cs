@@ -32,11 +32,12 @@ public class CounterInteractAnimation
 }
 
 
-
 public class SelectedCounterVisualAnimation : MonoBehaviour
 {
 
     public List<CounterMeshData> counterMeshData = new List<CounterMeshData>();
+
+    [Tooltip("Leave empty if no animation")]
     public CounterInteractAnimation counterInteractAnimation;
 
 
@@ -61,7 +62,10 @@ public class SelectedCounterVisualAnimation : MonoBehaviour
             meshData.meshRenderer.kitchenCounterRenderer.materials = new Material[] { };
             if (counter == selectedCounter)
             {
-                meshData.meshRenderer.kitchenCounterRenderer.materials = new Material[] { meshData.meshMaterial.defaultMaterial, meshData.meshMaterial.selectedMaterial };
+                meshData.meshRenderer.kitchenCounterRenderer.materials = new Material[] 
+                { 
+                    meshData.meshMaterial.defaultMaterial, meshData.meshMaterial.selectedMaterial 
+                };
 
             }
             else

@@ -27,6 +27,4 @@ public class KitchenObject : MonoBehaviour
 
         }
     }
-
-
 }

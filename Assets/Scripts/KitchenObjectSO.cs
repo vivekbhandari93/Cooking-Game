@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName ="Object",menuName ="Kitchen Objects", order =1)]
+[CreateAssetMenu(fileName = "Kitchen Objects", menuName ="Kitchen Objects", order =1)]
 public class KitchenObjectSO : ScriptableObject
 {
     public GameObject prefab;
